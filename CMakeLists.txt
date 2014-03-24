@@ -155,5 +155,7 @@ catkin_package(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable ( project3e SignalStrength.cpp )
-TARGET_LINK_LIBRARIES (project3e ${catkin_LIBRARIES})
+add_executable ( signalStrength SignalStrength.cpp )
+add_executable ( monitor monitor_node.cpp )
+TARGET_LINK_LIBRARIES (signalStrength ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES (monitor ${catkin_LIBRARIES})
