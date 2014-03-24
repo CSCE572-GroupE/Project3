@@ -155,7 +155,7 @@ catkin_package(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable ( signalStrength SignalStrength.cpp )
+add_executable ( wifi_and_battery wifi_and_battery_monitor.cpp )
 add_executable ( monitor monitor_node.cpp )
-TARGET_LINK_LIBRARIES (signalStrength ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES (wifi_and_battery ${catkin_LIBRARIES})
 TARGET_LINK_LIBRARIES (monitor ${catkin_LIBRARIES})
