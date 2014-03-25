@@ -16,20 +16,53 @@ void batteryMessageReceived(std_msgs::Int32 batteryPercentageObject){
 void diagnosticMessageRecieved(diagnostic_msgs::DiagnosticArray diagnosticArray){
 	for (int i = 0; i < sizeof(diagnosticArray.status); i++){
  		diagnostic_msgs::DiagnosticStatus status = diagnosticArray.status[i];
-		if (status.level == 1 || status.level == 2){
-			ROS_INFO_STREAM("Diagnostic Type: " << " MESSAGE: " << status.name << " -- " << status.message);
+		if (status.level == 1){
+			ROS_INFO_STREAM("WARNING: " << status.name << " -- " << status.message);
+		} else if (status.level == 2){
+			ROS_INFO_STREAM("ERROR: " << status.name << " -- " << status.message);
 		}
   	}
 }
 
+void contactBumperRight(){
+	ROS_INFO_STREAM("Bumper contact right.");
+}
+
+void contactBumperLeft(){
+	ROS_INFO_STREAM("Bumper contact left.");
+}
+
+void contactBumperCenter(){
+	ROS_INFO_STREAM("Bumper contact center.");
+}
+
+void wheelDropRight(){
+	ROS_INFO_STREAM("Wheel drop right.");
+}
+
+void wheelDropLeft(){
+	ROS_INFO_STREAM("Wheel drop left.");
+}
+
+void wheelDropCaster(){
+	ROS_INFO_STREAM("Wheel drop caster.");
+}
+
+
 void bumpWheeldropMessageReceived(std_msgs::Int32 bumpWheeldropObject){
-	int bumpWheeldrop = bumpWheeldropObject.value;
+	int bumpWheeldrop = bumpWheeldropObject.data;
 	
 	if (bumpWheeldrop == last_bumpWheeldrop){
 		return;
+	} else if (bumpWheeldrop > last_bumpWheeldrop){
+		bumpWheeldrop -= last_bumpWheeldrop;
+		last_bumpWheeldrop = bumpWheeldropObject.data;
+	} else {
+		last_bumpWheeldrop = bumpWheeldropObject.data;
+		return;
 	}
 	
-	int bump = bumpWheelDrop % 4;
+	int bump = bumpWheeldrop % 4;
 	int wheeldrop = bumpWheeldrop - bump;
 	
 	switch(bump){
@@ -98,31 +131,6 @@ void bumpWheeldropMessageReceived(std_msgs::Int32 bumpWheeldropObject){
 	    		break;
 	 }	
 	
-	last_bumpWheeldrop = bumpWheeldrop;
-}
-
-void contactBumperRight(){
-	ROS_INFO_STREAM("Bumper contact right.");
-}
-
-void contactBumperLeft(){
-	ROS_INFO_STREAM("Bumper contact left.");
-}
-
-void contactBumperCenter(){
-	ROS_INFO_STREAM("Bumper contact center.");
-}
-
-void wheelDropRight(){
-	ROS_INFO_STREAM("Wheel drop right.");
-}
-
-void wheelDropLeft(){
-	ROS_INFO_STREAM("Wheel drop left.");
-}
-
-void wheelDropCaster(){
-	ROS_INFO_STREAM("Wheel drop caster.");
 }
 
 

@@ -10,6 +10,9 @@
 using namespace std;
 
 const string IFNAME = "wlan0";
+const int RATE = 100;
+const int battery_wifi_publish_rate = 5 * RATE;
+int cycle_count = 0;
 
 int batteryPercentage;
 int bumps_wheeldrops;
@@ -65,17 +68,18 @@ int main(int argc, char** argv)
 	ros::Rate rate(100);
 
 	while(ros::ok()){
+	    if(cycle_count % battery_wifi_publish_rate == 0){ 
+	    	wifiPublisher.publish(determineWifiStrength());
 
-	    wifiPublisher.publish(determineWifiStrength());
-
-	    std_msgs::Int32 battery;
-	    battery.data = batteryPercentage;
-	    batteryPublisher.publish(battery);
-		
+	    	std_msgs::Int32 battery;
+	   	 battery.data = batteryPercentage;
+	    	batteryPublisher.publish(battery);
+	    }	
   	    std_msgs::Int32 wheeldrop;
 	    wheeldrop.data = bumps_wheeldrops;
 	    wheeldropPublisher.publish(wheeldrop);	    
-
+	    
+	    cycle_count++;
 	    rate.sleep();
 	    ros::spinOnce();
 	}
