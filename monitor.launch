@@ -1,0 +1,7 @@
+<launch>
+	<node 
+		pkg="project3e"
+		type="monitor"
+		name="monitor_node"
+	/>
+</launch>

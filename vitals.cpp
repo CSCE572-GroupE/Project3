@@ -13,6 +13,8 @@ const string IFNAME = "wlan0";
 
 int batteryPercentage;
 int bumps_wheeldrops;
+
+
 std_msgs::Int32 determineWifiStrength(){
     std_msgs::Int32 value;
     value.data = -1;
@@ -51,7 +53,7 @@ void turtlebotSensorStateMessageReceived(create_node::TurtlebotSensorState senso
 
 int main(int argc, char** argv)
 {
-	ros::init(argc,argv, "wifi_signal_strength");
+	ros::init(argc,argv, "vidals_node");
 	ros::NodeHandle nh;
 
 	ros::Publisher wifiPublisher = nh.advertise <std_msgs::Int32>("/wifi_ss",1000);
