@@ -12,7 +12,7 @@ using namespace std;
 const string IFNAME = "wlan0";
 
 int batteryPercentage;
-
+int bumps_wheeldrops;
 std_msgs::Int32 determineWifiStrength(){
     std_msgs::Int32 value;
     value.data = -1;
@@ -46,6 +46,7 @@ std_msgs::Int32 determineWifiStrength(){
 
 void turtlebotSensorStateMessageReceived(create_node::TurtlebotSensorState sensorState){
 	batteryPercentage = int(double(sensorState.charge)/sensorState.capacity * 100);	
+	bumps_wheeldrops = sensorState.bumps_wheeldrops;
 }
 
 int main(int argc, char** argv)
@@ -57,8 +58,9 @@ int main(int argc, char** argv)
 
 	ros::Subscriber batterySubscriber = nh.subscribe("/turtlebot_node/sensor_state", 1000, &turtlebotSensorStateMessageReceived);
 	ros::Publisher batteryPublisher = nh.advertise <std_msgs::Int32>("/battery_percentage", 1000);
-	
-	ros::Rate rate(0.2);
+	ros::Publisher wheeldropPublisher = nh.advertise <std_msgs::Int32>("/bump_wheeldrop", 1000);	
+
+	ros::Rate rate(100);
 
 	while(ros::ok()){
 
@@ -67,6 +69,10 @@ int main(int argc, char** argv)
 	    std_msgs::Int32 battery;
 	    battery.data = batteryPercentage;
 	    batteryPublisher.publish(battery);
+		
+  	    std_msgs::Int32 wheeldrop;
+	    wheeldrop.data = bumps_wheeldrops;
+	    wheeldropPublisher.publish(wheeldrop);	    
 
 	    rate.sleep();
 	    ros::spinOnce();
