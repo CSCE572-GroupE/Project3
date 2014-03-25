@@ -36,7 +36,7 @@ void bumpWheeldropMessageReceived(std_msgs::Int32 bumpWheeldropObject){
 		case 0:
 			//no bumps
 			break;
-    	case 1:
+		case 1:
     		//right bumper contact
     		contactBumperRight();
     		break;
@@ -50,15 +50,15 @@ void bumpWheeldropMessageReceived(std_msgs::Int32 bumpWheeldropObject){
     		break;
 		default:
 			//default error action
-    		// Shouldn't be here
-    		break;
+		   	// Shouldn't be here
+		    break;
 	}
 	
 	switch(wheeldrop) {
 			case 0:
-	    		//all wheels are on the ground and the front bumper is not colliding with any objects
-	    		//send out no messages
-	    		break;
+				//all wheels are on the ground and the front bumper is not colliding with any objects
+				//send out no messages
+				break;
 	    	case 4:
 	    		//right wheel dropping
 	    		wheelDropRight();
@@ -84,12 +84,12 @@ void bumpWheeldropMessageReceived(std_msgs::Int32 bumpWheeldropObject){
 	    	case 24:
 	    		//left and caster wheel dropping
 	    		wheelDropLeft();
-	    		wheelDropCaster();
+	   			wheelDropCaster();
 	    		break;
 	    	case 28:
 	    		//all three wheels dropped
 	    		wheelDropRight();
-		    	wheelDropLeft();
+	    		wheelDropLeft();
 				wheelDropCaster();
 	    		break;
 	    	default:
