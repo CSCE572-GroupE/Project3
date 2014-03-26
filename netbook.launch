@@ -83,7 +83,7 @@
 	<node 
 		pkg="project3e"
 		type="vitals"
-		name="vidals_node"
+		name="vitals_node"
 	/>
 	
 </launch>
